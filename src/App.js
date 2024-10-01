@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Provider } from 'react-redux';
+import { store } from './store';
+import SearchBar from './components/SearchBar';
+import DestinationCard from './components/DestinationCard';
+import Itinerary from './components/Itinerary';
+import Carousel from './components/Carousel';
+import './styles.css';
 
-function App() {
+const App = () => {
+  const [results, setResults] = useState([]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <h1>Travel Explorer</h1>
+        <SearchBar onResults={setResults} />
+        <Carousel destinations={results} />
+        <div className="destination-list">
+          {results.map((dest) => (
+            <DestinationCard key={dest.id} destination={dest} />
+          ))}
+        </div>
+        <Itinerary />
+      </div>
+    </Provider>
   );
-}
+};
 
 export default App;
