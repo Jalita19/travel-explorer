@@ -1,4 +1,4 @@
-// SearchBar.js
+// src/components/SearchBar.js
 import React, { useState } from 'react';
 
 const SearchBar = ({ onResults, setIsLoading }) => {
@@ -8,15 +8,15 @@ const SearchBar = ({ onResults, setIsLoading }) => {
 
     const handleSearch = async () => {
         if (!query.trim()) {
-            alert('Please enter a search term.'); // Alert for empty input
+            alert('Please enter a search term.');
             return;
         }
 
         setLoading(true);
         setIsLoading(true);
-        console.log('Searching for:', query); // Log the search query
+        console.log('Searching for:', query);
 
-        const url = 'https://booking-com15.p.rapidapi.com/api/v1/hotels/searchDestination?query=man';
+        const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/searchDestination?query=${encodeURIComponent(query)}`;;
         const options = {
             method: 'GET',
             headers: {
@@ -32,20 +32,27 @@ const SearchBar = ({ onResults, setIsLoading }) => {
             }
 
             const data = await response.json();
-            console.log('API Response:', data); // Log the response
+            console.log('API Response:', data);
 
-            if (data && data.length > 0) {
-                onResults(data);
-                setError(''); // Clear any previous error messages
+            // Check the structure of the response
+            if (data.status) {
+                const results = data.data; // Extract the data array
+                if (results && results.length > 0) {
+                    onResults(results);
+                    setError('');
+                } else {
+                    setError('No destinations found. Please try another search.');
+                    onResults([]);
+                }
             } else {
-                setError('No destinations found. Please try another search.');
+                setError(data.message || 'An error occurred.'); // Handle API errors
                 onResults([]);
             }
         } catch (error) {
             console.error("API request failed:", error);
             setError('An error occurred while fetching destinations.');
         } finally {
-            setLoading(false); // Reset loading state
+            setLoading(false);
             setIsLoading(false);
         }
     };
@@ -62,7 +69,7 @@ const SearchBar = ({ onResults, setIsLoading }) => {
             <button onClick={handleSearch} disabled={loading}>
                 {loading ? 'Searching...' : 'Search'}
             </button>
-            {error && <p className="error-message">{error}</p>} {/* Display error messages */}
+            {error && <p className="error-message">{error}</p>}
         </div>
     );
 };

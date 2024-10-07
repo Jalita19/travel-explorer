@@ -1,27 +1,85 @@
-/* src/styles.css */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f8ff; /* Fallback color */
+  background-image: url('/images/paris.jpg'); /* Path to your image */
+  background-size: cover; /* Cover the entire viewport */
+  background-position: center; /* Center the image */
+  color: #333; /* Text color */
+  margin: 0;
+  padding: 20px;
+}
 
 .App {
+  max-width: 800px;
+  margin: auto;
   text-align: center;
+  background: rgba(255, 255, 255, 0.8); /* White background with transparency for readability */
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
 }
 
-.destination-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+h1 {
+  color: #ff6347; /* Tomato color for the header */
 }
 
-.destination-card {
+.search-bar {
+  margin: 20px 0;
+  padding: 10px;
+  border: 2px solid #ff6347; /* Border color */
+  border-radius: 5px;
+  background-color: #ffffff; /* White background for the input */
+}
+
+input[type="text"] {
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 20px;
-  margin: 10px;
-  width: 200px; /* Adjust width as needed */
+  width: 60%;
+  transition: border-color 0.3s;
 }
 
-.loading-message {
-  color: blue;
+input[type="text"]:focus {
+  border-color: #ff6347; /* Highlight border on focus */
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #ff6347; /* Button color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #ff4500; /* Darker red on hover */
 }
 
 .error-message {
-  color: red;
+  color: #ff4500; /* Error message color */
+  font-weight: bold;
 }
+
+.destination-card {
+  background-color: #fff; /* Card background color */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 10px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.destination-card h3 {
+  color: #4682b4; /* Steel blue for destination names */
+}
+
+.destination-card button {
+  background-color: #32cd32; /* Lime green for favorites */
+}
+
+.destination-card button:hover {
+  background-color: #228b22; /* Darker green on hover */
+}
+
