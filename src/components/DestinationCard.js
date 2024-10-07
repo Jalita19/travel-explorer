@@ -21,3 +21,17 @@ const DestinationCard = ({ destination }) => {
 };
 
 export default DestinationCard;
+// src/components/DestinationCard.js
+import React from 'react';
+
+const DestinationCard = ({ destination }) => {
+  return (
+    <div className="destination-card">
+      <h2>{destination.name}</h2> {/* Adjust based on your API response structure */}
+      <p>{destination.description || 'No description available.'}</p> {/* Example of additional data */}
+      {/* Add any other relevant data fields you want to display */}
+    </div>
+  );
+};
+
+export default DestinationCard;

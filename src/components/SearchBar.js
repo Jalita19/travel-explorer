@@ -1,31 +1,52 @@
 // SearchBar.js
 import React, { useState } from 'react';
-import axios from 'axios';
 
-const SearchBar = ({ onResults }) => {
+const SearchBar = ({ onResults, setIsLoading }) => {
     const [query, setQuery] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
     const handleSearch = async () => {
+        if (!query.trim()) {
+            alert('Please enter a search term.'); // Alert for empty input
+            return;
+        }
+
+        setLoading(true);
+        setIsLoading(true);
         console.log('Searching for:', query); // Log the search query
+
+        const url = 'https://booking-com15.p.rapidapi.com/api/v1/hotels/searchDestination?query=man';
+        const options = {
+            method: 'GET',
+            headers: {
+                'x-rapidapi-key': 'da67456831msh26f381b32e02e04p1d2f92jsn493beb5a63f7', // Replace with your actual API key
+                'x-rapidapi-host': 'booking-com15.p.rapidapi.com'
+            }
+        };
+
         try {
-            const response = await axios.get('https://compare-flight-prices.p.rapidapi.com/GetPricesAPI/GetPrices.aspx', {
-                headers: {
-                    'x-rapidapi-key': process.env.REACT_APP_RAPIDAPI_KEY,
-                    'x-rapidapi-host': 'compare-flight-prices.p.rapidapi.com'
-                },
-                params: {
-                    q: query, // Add any additional required parameters
-                }
-            });
-            console.log('API Response:', response.data); // Log the response data
-            onResults(response.data);
+            const response = await fetch(url, options);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('API Response:', data); // Log the response
+
+            if (data && data.length > 0) {
+                onResults(data);
+                setError(''); // Clear any previous error messages
+            } else {
+                setError('No destinations found. Please try another search.');
+                onResults([]);
+            }
         } catch (error) {
             console.error("API request failed:", error);
-            if (error.response) {
-                console.error(`Response: ${error.response.status} - ${error.response.data}`);
-            } else {
-                console.error("Error message:", error.message);
-            }
+            setError('An error occurred while fetching destinations.');
+        } finally {
+            setLoading(false); // Reset loading state
+            setIsLoading(false);
         }
     };
 
@@ -36,8 +57,12 @@ const SearchBar = ({ onResults }) => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search..."
+                aria-label="Search destinations"
             />
-            <button onClick={handleSearch}>Search</button>
+            <button onClick={handleSearch} disabled={loading}>
+                {loading ? 'Searching...' : 'Search'}
+            </button>
+            {error && <p className="error-message">{error}</p>} {/* Display error messages */}
         </div>
     );
 };

@@ -1,14 +1,27 @@
+/* src/styles.css */
+
 .App {
-    text-align: center;
-  }
-  
-  .destination-card {
-    border: 1px solid #ccc;
-    margin: 10px;
-    padding: 10px;
-  }
-  
-  .carousel {
-    display: flex;
-    overflow-x: auto;
+  text-align: center;
+}
+
+.destination-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.destination-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 10px;
+  width: 200px; /* Adjust width as needed */
+}
+
+.loading-message {
+  color: blue;
+}
+
+.error-message {
+  color: red;
 }
