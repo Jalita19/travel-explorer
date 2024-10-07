@@ -1,3 +1,16 @@
+:root {
+  --primary-color: #ff6f61; /* Coral */
+  --secondary-color: #6ab04c; /* Light Green */
+  --background-color: #f9f9f9; /* Light Gray */
+  --text-color: #333; /* Dark Text */
+}
+
+body {
+  font-family: 'Patrick Hand', cursive;
+  background: linear-gradient(to right, #f9f9f9, #fff);
+  margin: 0; /* Reset default margin */
+}
+
 .App {
   text-align: center;
 }
@@ -35,4 +48,68 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.destination-card {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  padding: 15px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.destination-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.destination-card h3 {
+  color: var(--primary-color);
+}
+
+.destination-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: var(--secondary-color);
+}
+
+button:focus {
+  outline: none; /* Remove default focus outline */
+}
+
+.carousel {
+  background-image: url('path-to-cute-background.jpg'); /* Update this path */
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Optional: Add bounce effect on hover */
+button:hover {
+  animation: bounce 1s infinite alternate;
 }
